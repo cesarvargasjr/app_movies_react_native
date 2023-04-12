@@ -1,11 +1,20 @@
 import React from "react";
+import { FlatListMovies } from "../../components/FlatListMovies";
+import {
+  getNowPlayingMovies,
+  getPopularMovies,
+  getTopRatedMovies,
+  getUpcomingMovies,
+} from "../../services/movies";
 import * as S from "./styles";
-import { Text } from "react-native";
 
 export const Home = () => {
   return (
     <S.ContainerScreen>
-      <Text>Create screen home</Text>
+      <FlatListMovies title="Popular" request={getPopularMovies()} />
+      <FlatListMovies title="Top rated" request={getTopRatedMovies()} />
+      <FlatListMovies title="Now playing" request={getNowPlayingMovies()} />
+      <FlatListMovies title="Upcoming" request={getUpcomingMovies()} />
     </S.ContainerScreen>
   );
 };
