@@ -9,14 +9,14 @@ export default function AppRoutes() {
   return (
     <Stack.Navigator
       screenOptions={{
-        headerTintColor: colors.black,
+        headerTintColor: colors.white,
         headerTitleAlign: "center",
         headerTitleStyle: {
           fontSize: 21,
           fontFamily: fonts.semiBold,
         },
         headerStyle: {
-          backgroundColor: colors.white,
+          backgroundColor: colors.dark,
         },
       }}
     >
@@ -24,7 +24,7 @@ export default function AppRoutes() {
         name="Home"
         component={Home}
         options={{
-          title: "Home",
+          title: "Filmes",
           headerShown: true,
           headerBackVisible: true,
         }}

@@ -30,7 +30,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <NativeBaseProvider>
-        <StatusBar barStyle="dark-content" />
+        <StatusBar barStyle="light-content" />
         <Routes />
       </NativeBaseProvider>
     </NavigationContainer>
