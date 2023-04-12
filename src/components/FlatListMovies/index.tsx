@@ -1,9 +1,8 @@
 import React, { ActivityIndicator, FlatList, View } from "react-native";
 import { CardMovies } from "../Cards/CardMovies";
 import { useEffect, useState } from "react";
-import { RefreshControl } from "react-native";
-import * as S from "./styles";
 import colors from "../../utils/colors";
+import * as S from "./styles";
 
 interface FlatListProps {
   title: string;
@@ -15,7 +14,6 @@ export const FlatListMovies = ({ title, request }: FlatListProps) => {
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState(false);
-  const [refreshing, setRefreshing] = useState(false);
 
   const handleData = async () => {
     setLoading(true);
@@ -24,10 +22,6 @@ export const FlatListMovies = ({ title, request }: FlatListProps) => {
     setTotalPages(response?.total_pages);
     setLoading(false);
   };
-
-  // const refreshFilter = () => {
-  //   handleData();
-  // };
 
   useEffect(() => {
     handleData();
@@ -43,9 +37,7 @@ export const FlatListMovies = ({ title, request }: FlatListProps) => {
         contentContainerStyle={{ alignItems: "center" }}
         ItemSeparatorComponent={() => <View style={{ margin: 8 }} />}
         data={data}
-        renderItem={(item) => (
-          <CardMovies posterPath={item?.item?.poster_path} key={item} />
-        )}
+        renderItem={(item) => <CardMovies movie={item} key={item} />}
         onEndReached={() => page <= totalPages && !loading && setPage(page + 1)}
         ListFooterComponent={() => (
           <>
@@ -67,12 +59,6 @@ export const FlatListMovies = ({ title, request }: FlatListProps) => {
             )}
           </S.ContainerListEmpty>
         )}
-        // refreshControl={
-        //   <RefreshControl
-        //     refreshing={refreshing}
-        //     onRefresh={() => refreshFilter()}
-        //   />
-        // }
       />
     </S.ContainerFlatList>
   );

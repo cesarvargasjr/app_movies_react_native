@@ -1,12 +1,12 @@
 import React from "react";
 import { Image } from "react-native";
 
-export const CardMovies = ({ posterPath }: any) => {
+export const CardMovies = ({ movie }: any) => {
   return (
     <>
       <Image
         source={{
-          uri: `https://image.tmdb.org/t/p/w300/${posterPath}`,
+          uri: `https://image.tmdb.org/t/p/w300/${movie?.item?.poster_path}`,
         }}
         style={{
           resizeMode: "contain",
