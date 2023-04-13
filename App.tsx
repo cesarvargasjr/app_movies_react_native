@@ -2,6 +2,8 @@ import { LogBox } from "react-native";
 import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider } from "native-base";
+import { Provider } from "react-redux";
+import { Store } from "./src/store/storeConfig";
 import Routes from "./src/routes/app.routes";
 
 import {
@@ -28,11 +30,13 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <NativeBaseProvider>
-        <StatusBar barStyle="light-content" />
-        <Routes />
-      </NativeBaseProvider>
-    </NavigationContainer>
+    <Provider store={Store}>
+      <NavigationContainer>
+        <NativeBaseProvider>
+          <StatusBar barStyle="light-content" />
+          <Routes />
+        </NativeBaseProvider>
+      </NavigationContainer>
+    </Provider>
   );
 }

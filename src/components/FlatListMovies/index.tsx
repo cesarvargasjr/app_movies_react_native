@@ -1,15 +1,17 @@
 import React, { ActivityIndicator, FlatList, View } from "react-native";
-import { CardMovies } from "../Cards/CardMovies";
+
 import { useEffect, useState } from "react";
 import colors from "../../utils/colors";
 import * as S from "./styles";
+import CardMovies from "../Cards/CardMovies";
 
 interface FlatListProps {
   title: string;
   request: any;
+  onPress: any;
 }
 
-export const FlatListMovies = ({ title, request }: FlatListProps) => {
+export const FlatListMovies = ({ title, request, onPress }: FlatListProps) => {
   const [data, setData] = useState<any>([]);
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(1);
@@ -37,7 +39,7 @@ export const FlatListMovies = ({ title, request }: FlatListProps) => {
         contentContainerStyle={{ alignItems: "center" }}
         ItemSeparatorComponent={() => <View style={{ margin: 8 }} />}
         data={data}
-        renderItem={(item) => <CardMovies movie={item} key={item} />}
+        renderItem={(item) => <CardMovies movie={item} onPress={onPress} />}
         onEndReached={() => page <= totalPages && !loading && setPage(page + 1)}
         ListFooterComponent={() => (
           <>
