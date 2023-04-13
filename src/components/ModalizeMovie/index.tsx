@@ -12,6 +12,9 @@ interface ModalizeProps {
   overview: string;
   vote_average: number;
   poster_path: string;
+  runtime: number;
+  release_date: string;
+  budget: number;
   genres: [
     {
       name: string;
@@ -52,7 +55,7 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
         <S.ContainerTitle>
           <S.Title>{dataMovie?.title}</S.Title>
           <S.ContainerRating>
-            <S.Rating>{dataMovie?.vote_average.toFixed(1)}</S.Rating>
+            <S.TextRating>{dataMovie?.vote_average.toFixed(1)}</S.TextRating>
             <Image
               source={StarIcon}
               style={{
@@ -64,11 +67,25 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
           </S.ContainerRating>
         </S.ContainerTitle>
         <S.ConatinerGenres>
-          {dataMovie?.genres?.map((item) => (
-            <S.Genres>{item.name}</S.Genres>
+          {dataMovie?.genres?.map((item, i) => (
+            <S.Genres key={i}>{item.name}</S.Genres>
           ))}
         </S.ConatinerGenres>
-        <S.Overview>{dataMovie?.overview}</S.Overview>
+        <S.TextOverview>{dataMovie?.overview}</S.TextOverview>
+        <S.ConatinerLine>
+          <S.Box>
+            <S.Subtitle>Duration</S.Subtitle>
+            <S.Text>{dataMovie?.runtime}min</S.Text>
+          </S.Box>
+          <S.Box>
+            <S.Subtitle>Release date</S.Subtitle>
+            <S.Text>{dataMovie?.release_date}</S.Text>
+          </S.Box>
+          <S.Box>
+            <S.Subtitle>Budget</S.Subtitle>
+            <S.Text>${dataMovie?.budget.toLocaleString("en-EN")}</S.Text>
+          </S.Box>
+        </S.ConatinerLine>
       </S.ContainerContent>
     </Modalize>
   );

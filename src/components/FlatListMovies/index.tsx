@@ -1,14 +1,13 @@
 import React, { ActivityIndicator, FlatList, View } from "react-native";
-
 import { useEffect, useState } from "react";
+import CardMovies from "../Cards/CardMovies";
 import colors from "../../utils/colors";
 import * as S from "./styles";
-import CardMovies from "../Cards/CardMovies";
 
 interface FlatListProps {
   title: string;
   request: any;
-  onPress: any;
+  onPress: () => void;
 }
 
 export const FlatListMovies = ({ title, request, onPress }: FlatListProps) => {

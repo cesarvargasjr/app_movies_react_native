@@ -4,7 +4,10 @@ const initialState = {
   newId: 0,
 };
 
-export const movieIdReducer = (state = initialState, action: any) => {
+export const movieIdReducer = (
+  state = initialState,
+  action: { type: any; movieId: any }
+) => {
   switch (action.type) {
     case UPDATE_MOVIE_ID:
       return {

@@ -35,14 +35,14 @@ export const Title = styled.Text`
   max-width: 80%;
 `;
 
-export const Rating = styled.Text`
+export const TextRating = styled.Text`
   font-size: 21px;
   font-family: ${fonts.extraBold};
   color: ${colors.white};
-  margin-right: 4px;
+  margin-right: 5px;
 `;
 
-export const Overview = styled.Text`
+export const TextOverview = styled.Text`
   font-size: 16px;
   font-family: ${fonts.regular};
   color: ${colors.white};
@@ -51,8 +51,17 @@ export const Overview = styled.Text`
   margin-top: 25px;
 `;
 
+export const Text = styled.Text`
+  font-size: 16px;
+  font-family: ${fonts.regular};
+  color: ${colors.white};
+`;
+
+export const Box = styled.View`
+`;
+
 export const Genres = styled.Text`
-  padding: 3px;
+  padding: 3px 4px;
   font-size: 14px;
   border-radius: 4px;
   color: ${colors.green};
@@ -65,4 +74,17 @@ export const ConatinerGenres = styled.View`
   flex-direction: row;
   margin-top: 25px;
   width: 100%;
+`;
+
+export const ConatinerLine = styled.View`
+  flex-direction: row;
+  margin-top: 25px;
+  width: 100%;
+  justify-content: space-between;
+`;
+
+export const Subtitle = styled.Text`
+  font-size: 16px;
+  color: ${colors.white};
+  font-family: ${fonts.bold};
 `;

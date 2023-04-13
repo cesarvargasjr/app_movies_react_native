@@ -2,20 +2,20 @@ import React from "react";
 import { TouchableOpacity } from "react-native";
 import { Image } from "react-native";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
+import { AnyAction, Dispatch, bindActionCreators } from "redux";
 import { movieId } from "../../../store/actions/movieId";
 
 interface CardMoviesProps {
   movie: any;
-  onPress: any;
   movieId?: any;
+  onPress: () => void;
 }
 
 const mapStateToProps = (store: { movieIdState: { movieIdReducer: any } }) => ({
   newId: store.movieIdState.movieIdReducer,
 });
 
-const mapDispatchToProps = (dispatch: any) =>
+const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) =>
   bindActionCreators({ movieId }, dispatch);
 
 const CardMovies = ({ movie, onPress, movieId }: CardMoviesProps) => {
