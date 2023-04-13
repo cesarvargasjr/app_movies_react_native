@@ -2,6 +2,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { useNavigation } from "@react-navigation/core";
 import { TouchableOpacity } from "react-native";
 import { FavoriteMovies } from "../pages/Favorites";
+import { useModalAlert } from "../context/ModalAlert";
 import { Home } from "../pages/Home";
 import fonts from "../utils/fonts";
 import colors from "../utils/colors";
@@ -11,6 +12,7 @@ const Stack = createNativeStackNavigator();
 
 export default function AppRoutes() {
   const navigation: any = useNavigation();
+  const { setShowModal } = useModalAlert();
 
   return (
     <Stack.Navigator
@@ -31,7 +33,7 @@ export default function AppRoutes() {
         name="Home"
         component={Home}
         options={{
-          title: "Super Movies",
+          title: "Filmes",
           headerShown: true,
           headerLeft: () => (
             <TouchableOpacity
@@ -53,9 +55,14 @@ export default function AppRoutes() {
         name="FavoriteMovies"
         component={FavoriteMovies}
         options={{
-          title: "Favorite Movies",
+          title: "Filmes Favoritos",
           headerShown: true,
           headerBackVisible: true,
+          headerRight: () => (
+            <TouchableOpacity onPress={() => setShowModal(true)}>
+              <Ionicons name="trash" size={26} color={colors.white} />
+            </TouchableOpacity>
+          ),
         }}
       />
     </Stack.Navigator>

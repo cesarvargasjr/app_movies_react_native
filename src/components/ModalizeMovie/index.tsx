@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Image, TouchableOpacity } from "react-native";
+import { Image } from "react-native";
 import { Modalize } from "react-native-modalize";
 import { useSelector } from "react-redux";
 import { getMovie } from "../../services/movies";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import StarIcon from "../../assets/star.png";
 import colors from "../../utils/colors";
 import * as S from "./styles";
-import { StyleSheet } from "react-native";
 
 interface ModalizeProps {
+  id: number;
   title: string;
   overview: string;
   vote_average: number;
@@ -31,6 +32,39 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
   const handleDataMovie = async () => {
     const response = await getMovie(movieIdState?.newId);
     setDataMovie(response);
+  };
+
+  const handleFavoriteMovie = async (movie: any) => {
+    try {
+      const storedValue = await AsyncStorage.getItem("favoriteMovies");
+      if (storedValue) {
+        const favoriteMovies = JSON.parse(storedValue);
+        const movieIndex = favoriteMovies.findIndex(
+          (item: { id: number }) => item.id === movie.id
+        );
+        if (movieIndex === -1) {
+          favoriteMovies.push(movie);
+        } else {
+          favoriteMovies.splice(movieIndex, 1);
+        }
+        await AsyncStorage.setItem(
+          "favoriteMovies",
+          JSON.stringify(favoriteMovies)
+        );
+      } else {
+        const favoriteMovies = [movie];
+        await AsyncStorage.setItem(
+          "favoriteMovies",
+          JSON.stringify(favoriteMovies)
+        );
+      }
+    } catch (e) {
+      console.log("Failed to toggle favorite movie:", e);
+    }
+  };
+
+  const closeModalize = () => {
+    modalizeRef.current?.close();
   };
 
   useEffect(() => {
@@ -60,7 +94,9 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
             width: 200,
           }}
         />
-        <S.IconHeart onPress={() => console.log("teste")}>
+        <S.IconHeart
+          onPress={() => (handleFavoriteMovie(dataMovie), closeModalize())}
+        >
           <Ionicons name="ios-heart-sharp" size={35} color={colors.white} />
         </S.IconHeart>
         <S.IconShare onPress={() => console.log("teste")}>
@@ -104,35 +140,3 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
     </Modalize>
   );
 };
-
-export default StyleSheet.create({
-  modalize: {
-    position: "absolute",
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    zIndex: 9998,
-  },
-
-  modalize__wrapper: {
-    flex: 1,
-  },
-
-  modalize__content: {
-    zIndex: 5,
-
-    marginTop: "auto",
-
-    backgroundColor: "#fff",
-    borderTopLeftRadius: 12,
-    borderTopRightRadius: 12,
-
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.1,
-    shadowRadius: 12,
-
-    elevation: 4,
-  },
-});
