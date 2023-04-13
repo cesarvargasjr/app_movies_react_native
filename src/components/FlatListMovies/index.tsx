@@ -18,7 +18,7 @@ export const FlatListMovies = ({ title, request, onPress }: FlatListProps) => {
 
   const handleData = async () => {
     setLoading(true);
-    const response = await request;
+    const response = await request(page);
     setData([...data, ...response.results]);
     setTotalPages(response?.total_pages);
     setLoading(false);

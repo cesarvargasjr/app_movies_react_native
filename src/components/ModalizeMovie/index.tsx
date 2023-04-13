@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Image } from "react-native";
+import { Image, TouchableOpacity } from "react-native";
 import { Modalize } from "react-native-modalize";
 import { useSelector } from "react-redux";
 import { getMovie } from "../../services/movies";
-import colors from "../../utils/colors";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import StarIcon from "../../assets/star.png";
+import colors from "../../utils/colors";
 import * as S from "./styles";
+import { StyleSheet } from "react-native";
 
 interface ModalizeProps {
   title: string;
@@ -32,14 +34,20 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
   };
 
   useEffect(() => {
-    handleDataMovie();
+    if (movieIdState?.newId !== 0) {
+      handleDataMovie();
+    }
   }, [movieIdState]);
 
   return (
     <Modalize
       ref={modalizeRef}
       snapPoint={700}
-      modalStyle={{ backgroundColor: colors.dark }}
+      modalStyle={{
+        backgroundColor: colors.dark,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+      }}
     >
       <S.ContainerContent>
         <Image
@@ -52,6 +60,12 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
             width: 200,
           }}
         />
+        <S.IconHeart onPress={() => console.log("teste")}>
+          <Ionicons name="ios-heart-sharp" size={35} color={colors.white} />
+        </S.IconHeart>
+        <S.IconShare onPress={() => console.log("teste")}>
+          <Ionicons name="share-social" size={35} color={colors.white} />
+        </S.IconShare>
         <S.ContainerTitle>
           <S.Title>{dataMovie?.title}</S.Title>
           <S.ContainerRating>
@@ -90,3 +104,35 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
     </Modalize>
   );
 };
+
+export default StyleSheet.create({
+  modalize: {
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    zIndex: 9998,
+  },
+
+  modalize__wrapper: {
+    flex: 1,
+  },
+
+  modalize__content: {
+    zIndex: 5,
+
+    marginTop: "auto",
+
+    backgroundColor: "#fff",
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.1,
+    shadowRadius: 12,
+
+    elevation: 4,
+  },
+});
