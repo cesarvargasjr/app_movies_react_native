@@ -39,3 +39,13 @@ export const getUpcomingMovies = async (page?: number) => {
     throw error;
   }
 };
+
+export const getMovie = async (id: number) => {
+  try {
+    const { data } = await api.get(`/movie/${id}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

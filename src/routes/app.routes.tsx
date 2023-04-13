@@ -9,6 +9,7 @@ export default function AppRoutes() {
   return (
     <Stack.Navigator
       screenOptions={{
+        headerBackTitleVisible: false,
         headerTintColor: colors.white,
         headerTitleAlign: "center",
         headerTitleStyle: {
@@ -24,7 +25,7 @@ export default function AppRoutes() {
         name="Home"
         component={Home}
         options={{
-          title: "Filmes",
+          title: "Super Movies",
           headerShown: true,
           headerBackVisible: true,
         }}
