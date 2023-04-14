@@ -49,3 +49,13 @@ export const getMovie = async (id: number) => {
     throw error;
   }
 };
+
+export const getSearchMovie = async (page: number, value: string) => {
+  try {
+    const { data } = await api.get(`/search/movie?page=${page}?&query=${value}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

@@ -1,6 +1,7 @@
 import styled from "styled-components/native";
 import colors from "../../utils/colors";
 import fonts from "../../utils/fonts";
+import { StyleSheet } from "react-native";
 
 export const ContainerScreen = styled.ScrollView`
   height: 100%;
@@ -11,7 +12,7 @@ export const ContainerContent = styled.View`
   align-items: center;
   min-height: 100%;
   background-color: ${colors.dark};
-  padding: 0 4% 4% 4%;
+  padding: 4%;
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
 `;
@@ -102,3 +103,9 @@ export const IconShare = styled.TouchableOpacity`
   right: 35;
   top: 90;
 `;
+
+export const Styles = StyleSheet.create({
+  ActivityIndicator: {
+    marginTop: 300
+  },
+});

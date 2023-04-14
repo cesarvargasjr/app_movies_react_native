@@ -26,6 +26,7 @@ export const Title = styled.Text`
   color: ${colors.white};
   width: 100%;
   margin-bottom: 12px;
+  margin-left: 6px;
 `;
 
 export const Styles = StyleSheet.create({

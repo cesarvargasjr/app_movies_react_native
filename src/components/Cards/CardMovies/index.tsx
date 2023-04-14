@@ -28,9 +28,12 @@ const CardMovies = ({ movie, onPress, movieId }: CardMoviesProps) => {
           uri: `https://image.tmdb.org/t/p/w300/${poster_path}`,
         }}
         style={{
-          resizeMode: "contain",
           height: 260,
-          width: 190,
+          width: 170,
+          maxHeight: 260,
+          maxWidth: 170,
+          marginLeft: 8,
+          marginRight: 8,
         }}
       />
     </TouchableOpacity>

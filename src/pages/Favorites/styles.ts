@@ -5,7 +5,8 @@ import fonts from "../../utils/fonts";
 export const ContainerScreen = styled.View`
   background-color: ${colors.dark};
   height: 100%;
-  padding: 4%;
+  padding: 4% 0;
+  justify-content: center;
 `;
 
 export const ContainerEmpty = styled.View`
