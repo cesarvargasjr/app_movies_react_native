@@ -4,7 +4,6 @@ import { ModalizeMovie } from "../../components/ModalizeMovie";
 import { FlatList, View } from "react-native";
 import { ActivityIndicator } from "react-native";
 import { Input } from "../../components/Input";
-import { lazyLoad } from "../../utils/lazyLoad";
 import { openModalize } from "../../utils/openModalize";
 import CardMovies from "../../components/Cards/CardMovies";
 import colors from "../../utils/colors";
@@ -20,10 +19,13 @@ export const SearchMovies = () => {
 
   const handleData = async () => {
     setLoading(true);
-    const response = await getSearchMovie(page, value);
-    setData([...data, ...response.results]);
-    setTotalPages(response?.total_pages);
-    await lazyLoad(250);
+    if (value !== "") {
+      const response = await getSearchMovie(page, value);
+      setData([...data, ...response.results]);
+      setTotalPages(response?.total_pages);
+    } else {
+      setData([]);
+    }
     setLoading(false);
   };
 

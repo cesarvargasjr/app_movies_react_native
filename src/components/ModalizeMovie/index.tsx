@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 import { getMovie } from "../../services/movies";
 import { ActivityIndicator } from "react-native";
 import { lazyLoad } from "../../utils/lazyLoad";
+import { useRedraw } from "../../context/Redraw";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import StarIcon from "../../assets/star.png";
@@ -30,9 +31,14 @@ interface ModalizeProps {
 
 export const ModalizeMovie = ({ modalizeRef }: any) => {
   const movieIdState = useSelector((state: any) => state?.movieIdState);
+  const { redraw, setRedraw } = useRedraw();
+  const [data, setData] = useState([]);
   const [dataMovie, setDataMovie] = useState<ModalizeProps>();
   const [loading, setLoading] = useState(false);
-  // const homepageMovie = dataMovie?.homepage;
+
+  const closeModalize = () => {
+    modalizeRef.current?.close();
+  };
 
   const handleDataMovie = async () => {
     setLoading(true);
@@ -69,10 +75,38 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
     } catch (e) {
       console.log("Failed to toggle favorite movie:", e);
     }
+    closeModalize();
+    if (!redraw) {
+      setRedraw(true);
+    } else {
+      setRedraw(false);
+    }
   };
 
-  const closeModalize = () => {
-    modalizeRef.current?.close();
+  const handleStorage = async () => {
+    const dataStorge = await AsyncStorage.getItem("favoriteMovies");
+    const dataIds = dataStorge != null ? JSON.parse(dataStorge) : [];
+    setData(dataIds.map((item: any) => item.id));
+  };
+
+  const RenderIconHeart = () => {
+    const filteredArray = data?.filter(
+      (obj: any) => obj === movieIdState?.newId
+    );
+
+    if (movieIdState?.newId === filteredArray[0]) {
+      return (
+        <S.IconHeart onPress={() => handleFavoriteMovie(dataMovie)}>
+          <Ionicons name="ios-heart-sharp" size={35} color={colors.red} />
+        </S.IconHeart>
+      );
+    } else {
+      return (
+        <S.IconHeart onPress={() => handleFavoriteMovie(dataMovie)}>
+          <Ionicons name="ios-heart-sharp" size={35} color={colors.white} />
+        </S.IconHeart>
+      );
+    }
   };
 
   const shareMovie = async () => {
@@ -96,6 +130,7 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
     if (movieIdState?.newId !== 0) {
       handleDataMovie();
     }
+    handleStorage();
   }, [movieIdState]);
 
   return (
@@ -127,11 +162,7 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
                 width: 200,
               }}
             />
-            <S.IconHeart
-              onPress={() => (handleFavoriteMovie(dataMovie), closeModalize())}
-            >
-              <Ionicons name="ios-heart-sharp" size={35} color={colors.white} />
-            </S.IconHeart>
+            <RenderIconHeart />
             <S.IconShare onPress={shareMovie}>
               <Ionicons name="share-social" size={35} color={colors.white} />
             </S.IconShare>
