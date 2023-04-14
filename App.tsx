@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { Store } from "./src/store/storeConfig";
 import { ModalAlertProvider } from "./src/context/ModalAlert";
 import Routes from "./src/routes/app.routes";
+import colors from "./src/utils/colors";
 
 import {
   Nunito_400Regular,
@@ -49,7 +50,10 @@ export default function App() {
       <AllProviders>
         <NavigationContainer>
           <NativeBaseProvider>
-            <StatusBar barStyle="light-content" />
+            <StatusBar
+              barStyle="light-content"
+              backgroundColor={colors.darkSecondary}
+            />
             <Routes />
           </NativeBaseProvider>
         </NavigationContainer>
