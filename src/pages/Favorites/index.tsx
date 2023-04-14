@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { ModalizeMovie } from "../../components/ModalizeMovie";
 import { ModalAlert } from "../../components/Modal";
 import { useModalAlert } from "../../context/ModalAlert";
+import { openModalize } from "../../utils/openModalize";
 import { lazyLoad } from "../../utils/lazyLoad";
 import {
   ActivityIndicator,
@@ -20,10 +21,6 @@ export const FavoriteMovies = () => {
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [dataFavoriteMovies, setDataFavoriteMovies] = useState<any>([]);
-
-  const openModalize = () => {
-    modalizeRef.current?.open();
-  };
 
   const getAsyncStorage = async () => {
     try {
@@ -69,7 +66,10 @@ export const FavoriteMovies = () => {
               ItemSeparatorComponent={() => <View style={{ margin: 8 }} />}
               data={dataFavoriteMovies}
               renderItem={(item) => (
-                <CardMovies movie={item} onPress={openModalize} />
+                <CardMovies
+                  movie={item}
+                  onPress={() => openModalize(modalizeRef)}
+                />
               )}
               refreshControl={
                 <RefreshControl
