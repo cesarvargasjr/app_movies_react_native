@@ -28,10 +28,6 @@ export const FavoriteMovies = () => {
     try {
       setLoading(true);
       const dataStorage: any = await AsyncStorage.getItem("favoriteMovies");
-      // console.log(
-      //   "GET STORAGE ===>>>",
-      //   dataStorage != null ? JSON.parse(dataStorage) : null
-      // );
       setDataFavoriteMovies(
         dataStorage != null ? JSON.parse(dataStorage) : null
       );
@@ -50,13 +46,6 @@ export const FavoriteMovies = () => {
   useEffect(() => {
     getAsyncStorage();
   }, []);
-
-  // console.log(
-  //   "dataFavoriteMovies ===================",
-  //   dataFavoriteMovies?.map((item: any) => item?.id)
-  // );
-
-  // console.log("======", showModal);
 
   return (
     <>
