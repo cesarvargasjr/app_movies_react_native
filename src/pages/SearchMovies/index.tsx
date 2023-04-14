@@ -5,6 +5,7 @@ import { FlatList, View } from "react-native";
 import { ActivityIndicator } from "react-native";
 import { Input } from "../../components/Input";
 import { lazyLoad } from "../../utils/lazyLoad";
+import { openModalize } from "../../utils/openModalize";
 import CardMovies from "../../components/Cards/CardMovies";
 import colors from "../../utils/colors";
 import * as S from "./styles";
@@ -16,10 +17,6 @@ export const SearchMovies = () => {
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState(false);
   const modalizeRef: any = useRef(null);
-
-  const openModalize = () => {
-    modalizeRef.current?.open();
-  };
 
   const handleData = async () => {
     setLoading(true);
@@ -63,7 +60,10 @@ export const SearchMovies = () => {
               keyExtractor={(item) => item.id}
               data={data}
               renderItem={(item) => (
-                <CardMovies movie={item} onPress={openModalize} />
+                <CardMovies
+                  movie={item}
+                  onPress={() => openModalize(modalizeRef)}
+                />
               )}
               onEndReached={() =>
                 page <= totalPages && !loading && setPage(page + 1)

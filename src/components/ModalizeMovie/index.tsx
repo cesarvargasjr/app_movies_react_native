@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Image } from "react-native";
+import { Alert, Image, Share } from "react-native";
 import { Modalize } from "react-native-modalize";
 import { useSelector } from "react-redux";
 import { getMovie } from "../../services/movies";
@@ -20,6 +20,7 @@ interface ModalizeProps {
   runtime: number;
   release_date: string;
   budget: number;
+  homepage: any;
   genres: [
     {
       name: string;
@@ -31,6 +32,7 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
   const movieIdState = useSelector((state: any) => state?.movieIdState);
   const [dataMovie, setDataMovie] = useState<ModalizeProps>();
   const [loading, setLoading] = useState(false);
+  // const homepageMovie = dataMovie?.homepage;
 
   const handleDataMovie = async () => {
     setLoading(true);
@@ -73,6 +75,23 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
     modalizeRef.current?.close();
   };
 
+  const shareMovie = async () => {
+    let homepage = dataMovie?.homepage;
+    let overview = dataMovie?.overview;
+
+    if (homepage !== "" || overview !== "") {
+      await Share.share({
+        message: overview,
+        url: homepage,
+      });
+    } else {
+      Alert.alert(
+        "Atenção!",
+        "Não é possível compartilhar conteúdo deste filme."
+      );
+    }
+  };
+
   useEffect(() => {
     if (movieIdState?.newId !== 0) {
       handleDataMovie();
@@ -113,7 +132,7 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
             >
               <Ionicons name="ios-heart-sharp" size={35} color={colors.white} />
             </S.IconHeart>
-            <S.IconShare onPress={() => console.log("teste")}>
+            <S.IconShare onPress={shareMovie}>
               <Ionicons name="share-social" size={35} color={colors.white} />
             </S.IconShare>
             <S.ContainerTitle>
