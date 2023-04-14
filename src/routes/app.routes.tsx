@@ -73,6 +73,13 @@ export default function AppRoutes() {
           title: "Pesquisar filme",
           headerShown: true,
           headerBackVisible: true,
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("FavoriteMovies")}
+            >
+              <Ionicons name="ios-heart-sharp" size={30} color={colors.red} />
+            </TouchableOpacity>
+          ),
         }}
       />
     </Stack.Navigator>

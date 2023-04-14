@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider } from "native-base";
 import { Provider } from "react-redux";
 import { Store } from "./src/store/storeConfig";
+import { RedrawProvider } from "./src/context/Redraw";
 import { ModalAlertProvider } from "./src/context/ModalAlert";
 import Routes from "./src/routes/app.routes";
 import colors from "./src/utils/colors";
@@ -43,7 +44,7 @@ export default function App() {
         props.children
       );
 
-  const AllProviders = composeProviders(ModalAlertProvider);
+  const AllProviders = composeProviders(ModalAlertProvider, RedrawProvider);
 
   return (
     <Provider store={Store}>

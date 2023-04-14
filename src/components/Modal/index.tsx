@@ -2,6 +2,7 @@ import React from "react";
 import { Modal } from "react-native";
 import { clearStorage } from "../../utils/clearStorage";
 import { useModalAlert } from "../../context/ModalAlert";
+import { useRedraw } from "../../context/Redraw";
 import { Button } from "../Button";
 import * as S from "./styles";
 
@@ -11,6 +12,15 @@ interface ModalProps {
 
 export const ModalAlert = ({ text }: ModalProps) => {
   const { setShowModal } = useModalAlert();
+  const { redraw, setRedraw } = useRedraw();
+
+  const handleRedraw = () => {
+    if (!redraw) {
+      setRedraw(true);
+    } else {
+      setRedraw(false);
+    }
+  };
 
   return (
     <Modal transparent={true}>
@@ -21,7 +31,9 @@ export const ModalAlert = ({ text }: ModalProps) => {
           <Button
             typeButton="primary"
             text="Sim"
-            onPress={() => (clearStorage(), setShowModal(false))}
+            onPress={() => (
+              clearStorage(), setShowModal(false), handleRedraw()
+            )}
           />
           <Button
             typeButton="cancel"

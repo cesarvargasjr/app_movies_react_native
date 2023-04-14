@@ -4,6 +4,8 @@ import { ModalAlert } from "../../components/Modal";
 import { useModalAlert } from "../../context/ModalAlert";
 import { openModalize } from "../../utils/openModalize";
 import { lazyLoad } from "../../utils/lazyLoad";
+import { useRedraw } from "../../context/Redraw";
+import { useIsFocused } from "@react-navigation/native";
 import {
   ActivityIndicator,
   FlatList,
@@ -17,7 +19,9 @@ import * as S from "./styles";
 
 export const FavoriteMovies = () => {
   const modalizeRef: any = useRef(null);
+  const isFocused = useIsFocused();
   const { showModal } = useModalAlert();
+  const { redraw } = useRedraw();
   const [loading, setLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [dataFavoriteMovies, setDataFavoriteMovies] = useState<any>([]);
@@ -44,7 +48,7 @@ export const FavoriteMovies = () => {
 
   useEffect(() => {
     getAsyncStorage();
-  }, []);
+  }, [isFocused, redraw]);
 
   return (
     <>
