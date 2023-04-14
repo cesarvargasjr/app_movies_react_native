@@ -5,4 +5,5 @@ export const ContainerScreen = styled.ScrollView`
   height: 100%;
   background-color: ${colors.dark};
   padding-left: 4%;
+  padding-top: 3%;
 `;

@@ -4,6 +4,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { NativeBaseProvider } from "native-base";
 import { Provider } from "react-redux";
 import { Store } from "./src/store/storeConfig";
+import { ModalAlertProvider } from "./src/context/ModalAlert";
 import Routes from "./src/routes/app.routes";
 
 import {
@@ -29,14 +30,30 @@ export default function App() {
     return null;
   }
 
+  const composeProviders =
+    (
+      ...providers: {
+        ({ children }: any): JSX.Element;
+      }[]
+    ) =>
+    (props: { children: any }) =>
+      providers.reduceRight(
+        (children, Provider) => <Provider {...props}>{children}</Provider>,
+        props.children
+      );
+
+  const AllProviders = composeProviders(ModalAlertProvider);
+
   return (
     <Provider store={Store}>
-      <NavigationContainer>
-        <NativeBaseProvider>
-          <StatusBar barStyle="light-content" />
-          <Routes />
-        </NativeBaseProvider>
-      </NavigationContainer>
+      <AllProviders>
+        <NavigationContainer>
+          <NativeBaseProvider>
+            <StatusBar barStyle="light-content" />
+            <Routes />
+          </NativeBaseProvider>
+        </NavigationContainer>
+      </AllProviders>
     </Provider>
   );
 }

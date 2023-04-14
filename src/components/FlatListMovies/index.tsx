@@ -1,4 +1,4 @@
-import React, { ActivityIndicator, FlatList, View } from "react-native";
+import React, { ActivityIndicator, FlatList } from "react-native";
 import { useEffect, useState } from "react";
 import CardMovies from "../Cards/CardMovies";
 import colors from "../../utils/colors";
@@ -18,7 +18,7 @@ export const FlatListMovies = ({ title, request, onPress }: FlatListProps) => {
 
   const handleData = async () => {
     setLoading(true);
-    const response = await request;
+    const response = await request(page);
     setData([...data, ...response.results]);
     setTotalPages(response?.total_pages);
     setLoading(false);
@@ -36,7 +36,6 @@ export const FlatListMovies = ({ title, request, onPress }: FlatListProps) => {
         onEndReachedThreshold={0.3}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ alignItems: "center" }}
-        ItemSeparatorComponent={() => <View style={{ margin: 8 }} />}
         data={data}
         renderItem={(item) => <CardMovies movie={item} onPress={onPress} />}
         onEndReached={() => page <= totalPages && !loading && setPage(page + 1)}

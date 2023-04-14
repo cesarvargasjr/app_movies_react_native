@@ -11,7 +11,9 @@ export const ContainerContent = styled.View`
   align-items: center;
   min-height: 100%;
   background-color: ${colors.dark};
-  padding: 4%;
+  padding: 0 4% 4% 4%;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
 `;
 
 export const ContainerTitle = styled.View`
@@ -87,4 +89,16 @@ export const Subtitle = styled.Text`
   font-size: 16px;
   color: ${colors.white};
   font-family: ${fonts.bold};
+`;
+
+export const IconHeart = styled.TouchableOpacity`
+  position: absolute;
+  right: 35;
+  top: 30;
+`;
+
+export const IconShare = styled.TouchableOpacity`
+  position: absolute;
+  right: 35;
+  top: 90;
 `;

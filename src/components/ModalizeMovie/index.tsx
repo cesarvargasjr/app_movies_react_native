@@ -3,11 +3,14 @@ import { Image } from "react-native";
 import { Modalize } from "react-native-modalize";
 import { useSelector } from "react-redux";
 import { getMovie } from "../../services/movies";
-import colors from "../../utils/colors";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import StarIcon from "../../assets/star.png";
+import colors from "../../utils/colors";
 import * as S from "./styles";
 
 interface ModalizeProps {
+  id: number;
   title: string;
   overview: string;
   vote_average: number;
@@ -31,15 +34,54 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
     setDataMovie(response);
   };
 
+  const handleFavoriteMovie = async (movie: any) => {
+    try {
+      const storedValue = await AsyncStorage.getItem("favoriteMovies");
+      if (storedValue) {
+        const favoriteMovies = JSON.parse(storedValue);
+        const movieIndex = favoriteMovies.findIndex(
+          (item: { id: number }) => item.id === movie.id
+        );
+        if (movieIndex === -1) {
+          favoriteMovies.push(movie);
+        } else {
+          favoriteMovies.splice(movieIndex, 1);
+        }
+        await AsyncStorage.setItem(
+          "favoriteMovies",
+          JSON.stringify(favoriteMovies)
+        );
+      } else {
+        const favoriteMovies = [movie];
+        await AsyncStorage.setItem(
+          "favoriteMovies",
+          JSON.stringify(favoriteMovies)
+        );
+      }
+    } catch (e) {
+      console.log("Failed to toggle favorite movie:", e);
+    }
+  };
+
+  const closeModalize = () => {
+    modalizeRef.current?.close();
+  };
+
   useEffect(() => {
-    handleDataMovie();
+    if (movieIdState?.newId !== 0) {
+      handleDataMovie();
+    }
   }, [movieIdState]);
 
   return (
     <Modalize
       ref={modalizeRef}
       snapPoint={700}
-      modalStyle={{ backgroundColor: colors.dark }}
+      modalStyle={{
+        backgroundColor: colors.dark,
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+      }}
     >
       <S.ContainerContent>
         <Image
@@ -52,6 +94,14 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
             width: 200,
           }}
         />
+        <S.IconHeart
+          onPress={() => (handleFavoriteMovie(dataMovie), closeModalize())}
+        >
+          <Ionicons name="ios-heart-sharp" size={35} color={colors.white} />
+        </S.IconHeart>
+        <S.IconShare onPress={() => console.log("teste")}>
+          <Ionicons name="share-social" size={35} color={colors.white} />
+        </S.IconShare>
         <S.ContainerTitle>
           <S.Title>{dataMovie?.title}</S.Title>
           <S.ContainerRating>

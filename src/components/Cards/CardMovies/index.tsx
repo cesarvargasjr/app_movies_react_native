@@ -30,7 +30,7 @@ const CardMovies = ({ movie, onPress, movieId }: CardMoviesProps) => {
         style={{
           resizeMode: "contain",
           height: 260,
-          width: 170,
+          width: 190,
         }}
       />
     </TouchableOpacity>

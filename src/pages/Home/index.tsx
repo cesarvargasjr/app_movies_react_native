@@ -22,22 +22,22 @@ export const Home = () => {
       <S.ContainerScreen>
         <FlatListMovies
           title="Popular"
-          request={getPopularMovies()}
+          request={getPopularMovies}
           onPress={openModalize}
         />
         <FlatListMovies
           title="Top rated"
-          request={getTopRatedMovies()}
+          request={getTopRatedMovies}
           onPress={openModalize}
         />
         <FlatListMovies
           title="Now playing"
-          request={getNowPlayingMovies()}
+          request={getNowPlayingMovies}
           onPress={openModalize}
         />
         <FlatListMovies
           title="Upcoming"
-          request={getUpcomingMovies()}
+          request={getUpcomingMovies}
           onPress={openModalize}
         />
       </S.ContainerScreen>
