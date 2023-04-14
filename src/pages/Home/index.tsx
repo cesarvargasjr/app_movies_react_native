@@ -8,6 +8,7 @@ import {
   getUpcomingMovies,
 } from "../../services/movies";
 import * as S from "./styles";
+import { ScrollView } from "react-native";
 
 export const Home = () => {
   const modalizeRef: any = useRef(null);
@@ -21,22 +22,22 @@ export const Home = () => {
       <ModalizeMovie modalizeRef={modalizeRef} />
       <S.ContainerScreen>
         <FlatListMovies
-          title="Popular"
+          title="Mais populares"
           request={getPopularMovies}
           onPress={openModalize}
         />
         <FlatListMovies
-          title="Top rated"
+          title="Melhores avaliados"
           request={getTopRatedMovies}
           onPress={openModalize}
         />
         <FlatListMovies
-          title="Now playing"
+          title="Todo mundo está assistindo"
           request={getNowPlayingMovies}
           onPress={openModalize}
         />
         <FlatListMovies
-          title="Upcoming"
+          title="Lançamentos"
           request={getUpcomingMovies}
           onPress={openModalize}
         />

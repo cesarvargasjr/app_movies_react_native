@@ -4,7 +4,7 @@ import fonts from "../../utils/fonts";
 
 export const Button = styled.TouchableOpacity`
   background-color: ${colors.green};
-  width: 200px;
+  width: 150px;
   height: 40px;
   margin-top: 20px;
   border-radius: 8px;
@@ -15,7 +15,7 @@ export const Button = styled.TouchableOpacity`
 export const ButtonCancel = styled.TouchableOpacity`
   background-color: ${colors.white};
   border: 1px solid ${colors.red};
-  width: 200px;
+  width: 150px;
   height: 40px;
   margin-top: 20px;
   border-radius: 8px;

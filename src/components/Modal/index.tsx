@@ -14,8 +14,8 @@ export const ModalAlert = ({ text }: ModalProps) => {
 
   return (
     <Modal transparent={true}>
-      <S.Background onTouchEnd={() => setShowModal(false)} />
       <S.ContainerScreen>
+        <S.Background onTouchEnd={() => setShowModal(false)} />
         <S.ContainerModal>
           <S.Text>{text}</S.Text>
           <Button

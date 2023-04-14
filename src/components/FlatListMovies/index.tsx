@@ -36,6 +36,7 @@ export const FlatListMovies = ({ title, request, onPress }: FlatListProps) => {
         onEndReachedThreshold={0.3}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ alignItems: "center" }}
+        keyExtractor={(item) => item.id}
         data={data}
         renderItem={(item) => <CardMovies movie={item} onPress={onPress} />}
         onEndReached={() => page <= totalPages && !loading && setPage(page + 1)}

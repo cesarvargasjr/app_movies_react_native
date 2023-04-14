@@ -3,6 +3,7 @@ import { useNavigation } from "@react-navigation/core";
 import { TouchableOpacity } from "react-native";
 import { FavoriteMovies } from "../pages/Favorites";
 import { useModalAlert } from "../context/ModalAlert";
+import { SearchMovies } from "../pages/SearchMovies";
 import { Home } from "../pages/Home";
 import fonts from "../utils/fonts";
 import colors from "../utils/colors";
@@ -37,7 +38,7 @@ export default function AppRoutes() {
           headerShown: true,
           headerLeft: () => (
             <TouchableOpacity
-              onPress={() => navigation.navigate("FavoriteMovies")}
+              onPress={() => navigation.navigate("SearchMovies")}
             >
               <Ionicons name="search-outline" size={30} color={colors.white} />
             </TouchableOpacity>
@@ -55,7 +56,7 @@ export default function AppRoutes() {
         name="FavoriteMovies"
         component={FavoriteMovies}
         options={{
-          title: "Filmes Favoritos",
+          title: "Filmes favoritos",
           headerShown: true,
           headerBackVisible: true,
           headerRight: () => (
@@ -63,6 +64,15 @@ export default function AppRoutes() {
               <Ionicons name="trash" size={26} color={colors.white} />
             </TouchableOpacity>
           ),
+        }}
+      />
+      <Stack.Screen
+        name="SearchMovies"
+        component={SearchMovies}
+        options={{
+          title: "Pesquisar filme",
+          headerShown: true,
+          headerBackVisible: true,
         }}
       />
     </Stack.Navigator>
