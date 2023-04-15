@@ -89,7 +89,7 @@ $ npx expo start
 
 ##
 
-### QR Code para acessar o Health Care:
+### QR Code para acessar o build da aplicação:
 
 Este projeto é compatível com as plataformas Android e IOS, no entanto, neste momento somente smartphones Android conseguirão navegar no aplicativo através deste QR Code. Caso queira acessar a aplicação em um smartphone IOS será necessário fazer o clone deste repositório e executar o projeto localmente conforme os passos indicados na seção anterior.
 
