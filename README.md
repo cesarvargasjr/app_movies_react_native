@@ -23,7 +23,7 @@ Para exibir a listagem dos filmes utilizei a própria ferramenta do React Native
 
 Alterei a splashscreen e ícones da aplicação para proporcionar uma identidade visual agradável e uma identificação padronizada.
 
-Para finalizar, defini fontes e cores globais que auxiliam e proporcionam um desenvolvimento veloz e garante que os estilos utilizados estão seguindo o padrão pré-definido.
+Para finalizar, defini fontes e cores globais que auxiliam e proporcionam um desenvolvimento veloz e garante que os estilos utilizados estão seguindo o padrão pré-definido. Em relação aos testes end-to-end realizei todos no emulador e em meu smarthphone sendo os dois IOS.
 
 ##
 
@@ -91,12 +91,15 @@ $ npx expo start
 
 ### Screenshot da aplicação:
 
-Screen listando os filmes por categorias:
+<img width="354" alt="image" src="https://user-images.githubusercontent.com/72532360/232251624-36109cc7-4254-465b-89ec-7efa2e234fe9.png">
 
-Modal com informações do filmes:
+<img width="354" alt="image" src="https://user-images.githubusercontent.com/72532360/232251640-d76caea5-9759-4a6e-a15a-e936bb031ebf.png">
 
-Busca de filmes através de um input:
+<img width="353" alt="image" src="https://user-images.githubusercontent.com/72532360/232251652-3117af96-01e0-4984-a76c-fe5c80ba755b.png">
 
-Lista de favoritos:
+<img width="353" alt="image" src="https://user-images.githubusercontent.com/72532360/232251668-dfe3bde2-1438-4d7f-b29f-e2a397c172e7.png">
 
-Modal ao limpar lista de favoritos:
+<img width="356" alt="image" src="https://user-images.githubusercontent.com/72532360/232251677-5edc07f2-d7ef-49c0-9f8d-6eed807b773d.png">
+
+<img width="353" alt="image" src="https://user-images.githubusercontent.com/72532360/232251688-d3e29d14-41df-4a68-aaf7-5a3f47507d22.png">
+
