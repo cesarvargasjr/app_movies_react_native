@@ -14,7 +14,7 @@ import * as S from "./styles";
 export const SearchMovies = () => {
   const [data, setData] = useState<any>([]);
   const [page, setPage] = useState<number>(1);
-  const [value, setValue] = useState();
+  const [value, setValue] = useState("");
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState(false);
   const [redraw, setRedraw] = useState<boolean>(false);
@@ -53,7 +53,6 @@ export const SearchMovies = () => {
         placeholder="Digite aqui para pesquisar"
         onChangeText={(value) => handleSearch(value)}
       />
-      {data?.length === 0 && <S.TextEmpity>Faça sua pesquisa</S.TextEmpity>}
       {loading ? (
         <ActivityIndicator
           size="large"
@@ -89,8 +88,11 @@ export const SearchMovies = () => {
               )}
               ListEmptyComponent={() => (
                 <>
-                  {data?.length === 0 && !loading && (
+                  {value !== "" && data?.length === 0 && !loading && (
                     <S.TextEmpity>Busca não encontrada</S.TextEmpity>
+                  )}
+                  {value === "" && data?.length === 0 && (
+                    <S.TextEmpity>Faça sua pesquisa</S.TextEmpity>
                   )}
                 </>
               )}

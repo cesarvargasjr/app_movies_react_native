@@ -118,6 +118,15 @@ export const TextMoreActor = styled.Text`
   font-family: ${fonts.extraBold};
 `;
 
+export const ContainerIcon = styled.View`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300;
+  width: 200;
+  background-color: ${colors.darkSecondary};
+`;
+
 export const Styles = StyleSheet.create({
   ActivityIndicator: {
     marginTop: 300

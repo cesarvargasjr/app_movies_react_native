@@ -9,4 +9,5 @@ export default {
   orange: '#FF6424',
   greyLight: '#F3F2F2',
   grey: '#5a5a5a',
+  yellow: '#FFED00',
 };

@@ -5,8 +5,8 @@ import { connect } from "react-redux";
 import { AnyAction, Dispatch, bindActionCreators } from "redux";
 import { movieId } from "../../../store/actions/movieId";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import * as S from "./styles";
 import colors from "../../../utils/colors";
+import * as S from "./styles";
 
 interface CardMoviesProps {
   movie: any;

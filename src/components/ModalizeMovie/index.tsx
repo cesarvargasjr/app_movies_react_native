@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Alert, FlatList, Image, Share, View } from "react-native";
+import { Alert, FlatList, Image, Share } from "react-native";
 import { Modalize } from "react-native-modalize";
 import { useSelector } from "react-redux";
 import { getActorsMovie, getMovie } from "../../services/movies";
@@ -10,7 +10,6 @@ import { CardActor } from "../Cards/CardActors";
 import { idGenerator } from "../../utils/idGenerator";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import StarIcon from "../../assets/star.png";
 import colors from "../../utils/colors";
 import * as S from "./styles";
 
@@ -78,8 +77,8 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
           JSON.stringify(favoriteMovies)
         );
       }
-    } catch (e) {
-      console.log("Failed to toggle favorite movie:", e);
+    } catch (error) {
+      console.log(error);
     }
     closeModalize();
     if (!redraw) {
@@ -132,6 +131,29 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
     }
   };
 
+  const RenderImage = () => {
+    if (dataMovie?.poster_path) {
+      return (
+        <Image
+          source={{
+            uri: `https://image.tmdb.org/t/p/w300/${dataMovie?.poster_path}`,
+          }}
+          style={{
+            resizeMode: "contain",
+            height: 300,
+            width: 200,
+          }}
+        />
+      );
+    } else {
+      return (
+        <S.ContainerIcon>
+          <Ionicons name="images" size={90} color={colors.white} />
+        </S.ContainerIcon>
+      );
+    }
+  };
+
   useEffect(() => {
     if (movieIdState?.newId !== 0) {
       handleDataMovie();
@@ -158,16 +180,7 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
           />
         ) : (
           <>
-            <Image
-              source={{
-                uri: `https://image.tmdb.org/t/p/w300/${dataMovie?.poster_path}`,
-              }}
-              style={{
-                resizeMode: "contain",
-                height: 300,
-                width: 200,
-              }}
-            />
+            <RenderImage />
             <RenderIconHeart />
             <S.IconShare onPress={shareMovie}>
               <Ionicons name="share-social" size={35} color={colors.white} />
@@ -178,14 +191,7 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
                 <S.TextRating>
                   {dataMovie?.vote_average.toFixed(1)}
                 </S.TextRating>
-                <Image
-                  source={StarIcon}
-                  style={{
-                    marginTop: 3,
-                    height: 20,
-                    width: 20,
-                  }}
-                />
+                <Ionicons name="star" size={22} color={colors.yellow} />
               </S.ContainerRating>
             </S.ContainerTitle>
             <S.ConatinerGenres>
@@ -197,17 +203,27 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
             <S.ConatinerLine>
               <S.Box>
                 <S.Subtitle>Duração</S.Subtitle>
-                <S.Text>{dataMovie?.runtime}min</S.Text>
+                <S.Text>
+                  {dataMovie?.runtime !== 0
+                    ? `${dataMovie?.runtime}min`
+                    : "Não informado"}
+                </S.Text>
               </S.Box>
               <S.Box>
                 <S.Subtitle>Data</S.Subtitle>
                 <S.Text>
-                  {new Date(dataMovie?.release_date).toLocaleDateString()}
+                  {dataMovie?.release_date !== ""
+                    ? new Date(dataMovie?.release_date).toLocaleDateString()
+                    : "Não informado"}
                 </S.Text>
               </S.Box>
               <S.Box>
                 <S.Subtitle>Investimento</S.Subtitle>
-                <S.Text>${dataMovie?.budget.toLocaleString("en-EN")}</S.Text>
+                <S.Text>
+                  {dataMovie?.budget !== 0
+                    ? `$${dataMovie?.budget.toLocaleString("en-EN")}`
+                    : "Não informado"}
+                </S.Text>
               </S.Box>
             </S.ConatinerLine>
             <S.ShowMoreActors
@@ -231,8 +247,9 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
                           color={colors.greyLight}
                         />
                       )}
-                    {(dataActors?.cast?.length === 0 || !dataActors) &&
-                      !loading && <S.Text>Erro ao carregar atores</S.Text>}
+                    {(dataActors.length === 0 || !dataActors) && !loading && (
+                      <S.Subtitle>Nenhum ator encontrado.</S.Subtitle>
+                    )}
                   </>
                 )}
               />
