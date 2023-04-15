@@ -101,7 +101,7 @@ Este projeto é compatível com as plataformas Android e IOS, no entanto, neste 
 
 ### Screenshot da aplicação:
 
-<p align="center" gap=20>
+<p align="center">
 <img width="354" alt="image" src="https://user-images.githubusercontent.com/72532360/232251624-36109cc7-4254-465b-89ec-7efa2e234fe9.png">
 
 <img width="354" alt="image" src="https://user-images.githubusercontent.com/72532360/232251640-d76caea5-9759-4a6e-a15a-e936bb031ebf.png">
