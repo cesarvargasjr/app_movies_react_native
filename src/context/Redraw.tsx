@@ -2,7 +2,7 @@ import { createContext, useContext, useState } from "react";
 
 interface ContextProps {
   redraw: boolean;
-  setRedraw: (_: boolean) => void;
+  setRedraw: any;
 }
 
 export const RedrawContext = createContext({} as ContextProps);
