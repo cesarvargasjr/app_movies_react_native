@@ -22,8 +22,7 @@ export const SearchMovies = () => {
 
   const apiSearch = async (text: any) => {
     setLoading(true);
-    setData([]);
-    const response = await getSearchMovie(page, text);
+    const response = await getSearchMovie(1, text);
     setValue(text);
     setTotalPages(response?.total_pages);
     setData(response.results);
