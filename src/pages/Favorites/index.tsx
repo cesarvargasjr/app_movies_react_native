@@ -6,6 +6,7 @@ import { openModalize } from "../../utils/openModalize";
 import { lazyLoad } from "../../utils/lazyLoad";
 import { useRedraw } from "../../context/Redraw";
 import { useIsFocused } from "@react-navigation/native";
+import { idGenerator } from "../../utils/idGenerator";
 import {
   ActivityIndicator,
   FlatList,
@@ -64,7 +65,7 @@ export const FavoriteMovies = () => {
             <FlatList
               onEndReachedThreshold={0.3}
               numColumns={2}
-              keyExtractor={(item) => item.id}
+              keyExtractor={idGenerator}
               showsHorizontalScrollIndicator={true}
               contentContainerStyle={{ alignItems: "center" }}
               ItemSeparatorComponent={() => <View style={{ margin: 8 }} />}

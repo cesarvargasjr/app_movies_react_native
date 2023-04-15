@@ -1,5 +1,6 @@
 import React, { ActivityIndicator, FlatList } from "react-native";
 import { useEffect, useState } from "react";
+import { idGenerator } from "../../utils/idGenerator";
 import CardMovies from "../Cards/CardMovies";
 import colors from "../../utils/colors";
 import * as S from "./styles";
@@ -36,7 +37,7 @@ export const FlatListMovies = ({ title, request, onPress }: FlatListProps) => {
         onEndReachedThreshold={0.3}
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={{ alignItems: "center" }}
-        keyExtractor={(item) => item.id}
+        keyExtractor={idGenerator}
         data={data}
         renderItem={(item) => <CardMovies movie={item} onPress={onPress} />}
         onEndReached={() => page <= totalPages && !loading && setPage(page + 1)}

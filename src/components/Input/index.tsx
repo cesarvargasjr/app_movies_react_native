@@ -5,7 +5,7 @@ import * as S from "./styles";
 export interface InputProps {
   typeInput?: string;
   placeholder: string;
-  value: string;
+  value?: string;
   onChangeText: (_: any) => void;
 }
 

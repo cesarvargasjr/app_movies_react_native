@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Image, Share } from "react-native";
+import { Alert, FlatList, Image, Share, View } from "react-native";
 import { Modalize } from "react-native-modalize";
 import { useSelector } from "react-redux";
-import { getMovie } from "../../services/movies";
+import { getActorsMovie, getMovie } from "../../services/movies";
 import { ActivityIndicator } from "react-native";
 import { lazyLoad } from "../../utils/lazyLoad";
 import { useRedraw } from "../../context/Redraw";
+import { CardActor } from "../Cards/CardActors";
+import { idGenerator } from "../../utils/idGenerator";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import StarIcon from "../../assets/star.png";
@@ -19,7 +21,7 @@ interface ModalizeProps {
   vote_average: number;
   poster_path: string;
   runtime: number;
-  release_date: string;
+  release_date: any;
   budget: number;
   homepage: any;
   genres: [
@@ -34,6 +36,8 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
   const { redraw, setRedraw } = useRedraw();
   const [data, setData] = useState([]);
   const [dataMovie, setDataMovie] = useState<ModalizeProps>();
+  const [dataActors, setDataActors] = useState<any>([]);
+  const [showActors, setShowActors] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const closeModalize = () => {
@@ -44,6 +48,8 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
     setLoading(true);
     const response = await getMovie(movieIdState?.newId);
     setDataMovie(response);
+    const actors = await getActorsMovie(movieIdState?.newId);
+    setDataActors(actors?.cast);
     await lazyLoad(250);
     setLoading(false);
   };
@@ -190,18 +196,47 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
             <S.TextOverview>{dataMovie?.overview}</S.TextOverview>
             <S.ConatinerLine>
               <S.Box>
-                <S.Subtitle>Duration</S.Subtitle>
+                <S.Subtitle>Duração</S.Subtitle>
                 <S.Text>{dataMovie?.runtime}min</S.Text>
               </S.Box>
               <S.Box>
-                <S.Subtitle>Release date</S.Subtitle>
-                <S.Text>{dataMovie?.release_date}</S.Text>
+                <S.Subtitle>Data</S.Subtitle>
+                <S.Text>
+                  {new Date(dataMovie?.release_date).toLocaleDateString()}
+                </S.Text>
               </S.Box>
               <S.Box>
-                <S.Subtitle>Budget</S.Subtitle>
+                <S.Subtitle>Investimento</S.Subtitle>
                 <S.Text>${dataMovie?.budget.toLocaleString("en-EN")}</S.Text>
               </S.Box>
             </S.ConatinerLine>
+            <S.ShowMoreActors
+              onPress={() => setShowActors((showActors) => !showActors)}
+            >
+              <S.TextMoreActor>Ver atores</S.TextMoreActor>
+            </S.ShowMoreActors>
+            {showActors && (
+              <FlatList
+                numColumns={2}
+                keyExtractor={idGenerator}
+                contentContainerStyle={{ alignItems: "center" }}
+                data={dataActors}
+                renderItem={(item) => <CardActor actor={item} />}
+                ListEmptyComponent={() => (
+                  <>
+                    {(dataActors?.cast?.length === 0 || !dataActors) &&
+                      loading && (
+                        <ActivityIndicator
+                          size="large"
+                          color={colors.greyLight}
+                        />
+                      )}
+                    {(dataActors?.cast?.length === 0 || !dataActors) &&
+                      !loading && <S.Text>Erro ao carregar atores</S.Text>}
+                  </>
+                )}
+              />
+            )}
           </>
         )}
       </S.ContainerContent>
