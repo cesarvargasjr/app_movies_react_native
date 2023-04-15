@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Image, Share } from "react-native";
+import { Alert, FlatList, Image, Share } from "react-native";
 import { Modalize } from "react-native-modalize";
 import { useSelector } from "react-redux";
-import { getMovie } from "../../services/movies";
+import { getActorsMovie, getMovie } from "../../services/movies";
 import { ActivityIndicator } from "react-native";
 import { lazyLoad } from "../../utils/lazyLoad";
 import { useRedraw } from "../../context/Redraw";
+import { CardActor } from "../Cards/CardActors";
+import { idGenerator } from "../../utils/idGenerator";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import StarIcon from "../../assets/star.png";
 import colors from "../../utils/colors";
 import * as S from "./styles";
 
@@ -19,7 +20,7 @@ interface ModalizeProps {
   vote_average: number;
   poster_path: string;
   runtime: number;
-  release_date: string;
+  release_date: any;
   budget: number;
   homepage: any;
   genres: [
@@ -34,6 +35,8 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
   const { redraw, setRedraw } = useRedraw();
   const [data, setData] = useState([]);
   const [dataMovie, setDataMovie] = useState<ModalizeProps>();
+  const [dataActors, setDataActors] = useState<any>([]);
+  const [showActors, setShowActors] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const closeModalize = () => {
@@ -44,6 +47,8 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
     setLoading(true);
     const response = await getMovie(movieIdState?.newId);
     setDataMovie(response);
+    const actors = await getActorsMovie(movieIdState?.newId);
+    setDataActors(actors?.cast);
     await lazyLoad(250);
     setLoading(false);
   };
@@ -72,8 +77,8 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
           JSON.stringify(favoriteMovies)
         );
       }
-    } catch (e) {
-      console.log("Failed to toggle favorite movie:", e);
+    } catch (error) {
+      console.log(error);
     }
     closeModalize();
     if (!redraw) {
@@ -126,6 +131,29 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
     }
   };
 
+  const RenderImage = () => {
+    if (dataMovie?.poster_path) {
+      return (
+        <Image
+          source={{
+            uri: `https://image.tmdb.org/t/p/w300/${dataMovie?.poster_path}`,
+          }}
+          style={{
+            resizeMode: "contain",
+            height: 300,
+            width: 200,
+          }}
+        />
+      );
+    } else {
+      return (
+        <S.ContainerIcon>
+          <Ionicons name="images" size={90} color={colors.white} />
+        </S.ContainerIcon>
+      );
+    }
+  };
+
   useEffect(() => {
     if (movieIdState?.newId !== 0) {
       handleDataMovie();
@@ -152,16 +180,7 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
           />
         ) : (
           <>
-            <Image
-              source={{
-                uri: `https://image.tmdb.org/t/p/w300/${dataMovie?.poster_path}`,
-              }}
-              style={{
-                resizeMode: "contain",
-                height: 300,
-                width: 200,
-              }}
-            />
+            <RenderImage />
             <RenderIconHeart />
             <S.IconShare onPress={shareMovie}>
               <Ionicons name="share-social" size={35} color={colors.white} />
@@ -172,14 +191,7 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
                 <S.TextRating>
                   {dataMovie?.vote_average.toFixed(1)}
                 </S.TextRating>
-                <Image
-                  source={StarIcon}
-                  style={{
-                    marginTop: 3,
-                    height: 20,
-                    width: 20,
-                  }}
-                />
+                <Ionicons name="star" size={22} color={colors.yellow} />
               </S.ContainerRating>
             </S.ContainerTitle>
             <S.ConatinerGenres>
@@ -190,18 +202,58 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
             <S.TextOverview>{dataMovie?.overview}</S.TextOverview>
             <S.ConatinerLine>
               <S.Box>
-                <S.Subtitle>Duration</S.Subtitle>
-                <S.Text>{dataMovie?.runtime}min</S.Text>
+                <S.Subtitle>Duração</S.Subtitle>
+                <S.Text>
+                  {dataMovie?.runtime !== 0
+                    ? `${dataMovie?.runtime}min`
+                    : "Não informado"}
+                </S.Text>
               </S.Box>
               <S.Box>
-                <S.Subtitle>Release date</S.Subtitle>
-                <S.Text>{dataMovie?.release_date}</S.Text>
+                <S.Subtitle>Data</S.Subtitle>
+                <S.Text>
+                  {dataMovie?.release_date !== ""
+                    ? new Date(dataMovie?.release_date).toLocaleDateString()
+                    : "Não informado"}
+                </S.Text>
               </S.Box>
               <S.Box>
-                <S.Subtitle>Budget</S.Subtitle>
-                <S.Text>${dataMovie?.budget.toLocaleString("en-EN")}</S.Text>
+                <S.Subtitle>Investimento</S.Subtitle>
+                <S.Text>
+                  {dataMovie?.budget !== 0
+                    ? `$${dataMovie?.budget.toLocaleString("en-EN")}`
+                    : "Não informado"}
+                </S.Text>
               </S.Box>
             </S.ConatinerLine>
+            <S.ShowMoreActors
+              onPress={() => setShowActors((showActors) => !showActors)}
+            >
+              <S.TextMoreActor>Ver atores</S.TextMoreActor>
+            </S.ShowMoreActors>
+            {showActors && (
+              <FlatList
+                numColumns={2}
+                keyExtractor={idGenerator}
+                contentContainerStyle={{ alignItems: "center" }}
+                data={dataActors}
+                renderItem={(item) => <CardActor actor={item} />}
+                ListEmptyComponent={() => (
+                  <>
+                    {(dataActors?.cast?.length === 0 || !dataActors) &&
+                      loading && (
+                        <ActivityIndicator
+                          size="large"
+                          color={colors.greyLight}
+                        />
+                      )}
+                    {(dataActors.length === 0 || !dataActors) && !loading && (
+                      <S.Subtitle>Nenhum ator encontrado.</S.Subtitle>
+                    )}
+                  </>
+                )}
+              />
+            )}
           </>
         )}
       </S.ContainerContent>

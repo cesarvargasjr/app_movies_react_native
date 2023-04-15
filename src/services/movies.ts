@@ -52,7 +52,17 @@ export const getMovie = async (id: number) => {
 
 export const getSearchMovie = async (page: number, value: string) => {
   try {
-    const { data } = await api.get(`/search/movie?page=${page}?&query=${value}`);
+    const { data } = await api.get(`/search/movie?query=${value}&page=${page}`);
+    return data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getActorsMovie = async (id: string) => {
+  try {
+    const { data } = await api.get(`/movie/${id}/credits`);
     return data;
   } catch (error) {
     console.log(error);

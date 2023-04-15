@@ -104,6 +104,29 @@ export const IconShare = styled.TouchableOpacity`
   top: 90;
 `;
 
+export const ShowMoreActors = styled.TouchableOpacity`
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding: 4px 20px;
+  border-radius: 50px;
+  background-color: ${colors.orange};
+`;
+
+export const TextMoreActor = styled.Text`
+  font-size: 16px;
+  color: ${colors.white};
+  font-family: ${fonts.extraBold};
+`;
+
+export const ContainerIcon = styled.View`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 300;
+  width: 200;
+  background-color: ${colors.darkSecondary};
+`;
+
 export const Styles = StyleSheet.create({
   ActivityIndicator: {
     marginTop: 300

@@ -5,46 +5,55 @@ import { FlatList, View } from "react-native";
 import { ActivityIndicator } from "react-native";
 import { Input } from "../../components/Input";
 import { openModalize } from "../../utils/openModalize";
+import { idGenerator } from "../../utils/idGenerator";
+import { useDebounce } from "../../utils/debounce";
 import CardMovies from "../../components/Cards/CardMovies";
 import colors from "../../utils/colors";
 import * as S from "./styles";
 
 export const SearchMovies = () => {
-  const [value, setValue] = useState<string>("");
   const [data, setData] = useState<any>([]);
   const [page, setPage] = useState<number>(1);
+  const [value, setValue] = useState("");
   const [totalPages, setTotalPages] = useState<number>(1);
   const [loading, setLoading] = useState(false);
+  const [redraw, setRedraw] = useState<boolean>(false);
   const modalizeRef: any = useRef(null);
 
-  const handleData = async () => {
+  const apiSearch = async (text: any) => {
     setLoading(true);
-    if (value !== "") {
-      const response = await getSearchMovie(page, value);
-      setData([...data, ...response.results]);
-      setTotalPages(response?.total_pages);
-    } else {
-      setData([]);
-    }
+    setData([]);
+    const response = await getSearchMovie(page, text);
+    setValue(text);
+    setTotalPages(response?.total_pages);
+    setData(response.results);
+    setRedraw((v) => !v);
     setLoading(false);
   };
 
+  const apiSearchPaginate = async (text: any) => {
+    const response = await getSearchMovie(page, text);
+    setValue(text);
+    setTotalPages(response?.total_pages);
+    setData([...data, ...response.results]);
+  };
+
+  const handleSearch = useDebounce(apiSearch);
+
+  useEffect(() => {}, [redraw]);
+
   useEffect(() => {
-    handleData();
-  }, [page, value]);
+    apiSearchPaginate(value);
+  }, [page]);
 
   return (
     <S.ContainerScreen>
       <Input
         typeInput="search"
         placeholder="Digite aqui para pesquisar"
-        value={value}
-        onChangeText={(text) => setValue(text)}
+        onChangeText={(value) => handleSearch(value)}
       />
-      {value === "" && data?.length === 0 && (
-        <S.TextEmpity>Faça sua pesquisa</S.TextEmpity>
-      )}
-      {value !== "" && loading ? (
+      {loading ? (
         <ActivityIndicator
           size="large"
           color={colors.greyLight}
@@ -59,7 +68,7 @@ export const SearchMovies = () => {
               onEndReachedThreshold={0.3}
               ItemSeparatorComponent={() => <View style={{ margin: 8 }} />}
               showsVerticalScrollIndicator={false}
-              keyExtractor={(item) => item.id}
+              keyExtractor={idGenerator}
               data={data}
               renderItem={(item) => (
                 <CardMovies
@@ -81,6 +90,9 @@ export const SearchMovies = () => {
                 <>
                   {value !== "" && data?.length === 0 && !loading && (
                     <S.TextEmpity>Busca não encontrada</S.TextEmpity>
+                  )}
+                  {value === "" && data?.length === 0 && (
+                    <S.TextEmpity>Faça sua pesquisa</S.TextEmpity>
                   )}
                 </>
               )}
