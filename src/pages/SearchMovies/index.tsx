@@ -65,6 +65,7 @@ export const SearchMovies = () => {
             <FlatList
               numColumns={2}
               onEndReachedThreshold={0.3}
+              contentContainerStyle={{ alignItems: "center" }}
               ItemSeparatorComponent={() => <View style={{ margin: 8 }} />}
               showsVerticalScrollIndicator={false}
               keyExtractor={idGenerator}

@@ -21,7 +21,7 @@ export const Character = styled.Text`
   font-family: ${fonts.regular};
   color: ${colors.white};
   margin-top: 3px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
   width: 85%;
   text-align: center;
 `;

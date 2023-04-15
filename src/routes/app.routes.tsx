@@ -5,6 +5,7 @@ import { FavoriteMovies } from "../pages/Favorites";
 import { useModalAlert } from "../context/ModalAlert";
 import { SearchMovies } from "../pages/SearchMovies";
 import { Home } from "../pages/Home";
+import { Actors } from "../pages/Actors";
 import fonts from "../utils/fonts";
 import colors from "../utils/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -80,6 +81,15 @@ export default function AppRoutes() {
               <Ionicons name="ios-heart-sharp" size={30} color={colors.red} />
             </TouchableOpacity>
           ),
+        }}
+      />
+      <Stack.Screen
+        name="Actors"
+        component={Actors}
+        options={{
+          title: "Atores do filme",
+          headerShown: true,
+          headerBackVisible: true,
         }}
       />
     </Stack.Navigator>

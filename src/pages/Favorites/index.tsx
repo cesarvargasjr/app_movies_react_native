@@ -66,7 +66,7 @@ export const FavoriteMovies = () => {
               onEndReachedThreshold={0.3}
               numColumns={2}
               keyExtractor={idGenerator}
-              showsHorizontalScrollIndicator={true}
+              showsVerticalScrollIndicator={false}
               contentContainerStyle={{ alignItems: "center" }}
               ItemSeparatorComponent={() => <View style={{ margin: 8 }} />}
               data={dataFavoriteMovies}
@@ -83,7 +83,7 @@ export const FavoriteMovies = () => {
                 />
               }
               ListEmptyComponent={() => (
-                <S.ContainerEmpty>
+                <>
                   {(dataFavoriteMovies?.length === 0 || !dataFavoriteMovies) &&
                     loading && (
                       <ActivityIndicator
@@ -95,7 +95,7 @@ export const FavoriteMovies = () => {
                     !loading && (
                       <S.Text>Você não possui filmes favoritos</S.Text>
                     )}
-                </S.ContainerEmpty>
+                </>
               )}
             />
           </>

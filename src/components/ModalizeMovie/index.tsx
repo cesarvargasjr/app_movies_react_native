@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Alert, FlatList, Image, Share } from "react-native";
+import { Alert, Image, Share } from "react-native";
 import { Modalize } from "react-native-modalize";
 import { useSelector } from "react-redux";
-import { getActorsMovie, getMovie } from "../../services/movies";
+import { getMovie } from "../../services/movies";
 import { ActivityIndicator } from "react-native";
 import { lazyLoad } from "../../utils/lazyLoad";
 import { useRedraw } from "../../context/Redraw";
-import { CardActor } from "../Cards/CardActors";
-import { idGenerator } from "../../utils/idGenerator";
+import { useNavigation } from "@react-navigation/core";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import colors from "../../utils/colors";
@@ -31,12 +30,11 @@ interface ModalizeProps {
 }
 
 export const ModalizeMovie = ({ modalizeRef }: any) => {
+  const navigation: any = useNavigation();
   const movieIdState = useSelector((state: any) => state?.movieIdState);
   const { redraw, setRedraw } = useRedraw();
   const [data, setData] = useState([]);
   const [dataMovie, setDataMovie] = useState<ModalizeProps>();
-  const [dataActors, setDataActors] = useState<any>([]);
-  const [showActors, setShowActors] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const closeModalize = () => {
@@ -47,8 +45,6 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
     setLoading(true);
     const response = await getMovie(movieIdState?.newId);
     setDataMovie(response);
-    const actors = await getActorsMovie(movieIdState?.newId);
-    setDataActors(actors?.cast);
     await lazyLoad(250);
     setLoading(false);
   };
@@ -81,11 +77,7 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
       console.log(error);
     }
     closeModalize();
-    if (!redraw) {
-      setRedraw(true);
-    } else {
-      setRedraw(false);
-    }
+    setRedraw((v: boolean) => !v);
   };
 
   const handleStorage = async () => {
@@ -140,8 +132,8 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
           }}
           style={{
             resizeMode: "contain",
-            height: 300,
-            width: 200,
+            height: 200,
+            width: 150,
           }}
         />
       );
@@ -164,7 +156,8 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
   return (
     <Modalize
       ref={modalizeRef}
-      snapPoint={700}
+      snapPoint={600}
+      disableScrollIfPossible={true}
       modalStyle={{
         backgroundColor: colors.dark,
         borderTopLeftRadius: 30,
@@ -191,7 +184,7 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
                 <S.TextRating>
                   {dataMovie?.vote_average.toFixed(1)}
                 </S.TextRating>
-                <Ionicons name="star" size={22} color={colors.yellow} />
+                <Ionicons name="star" size={18} color={colors.yellow} />
               </S.ContainerRating>
             </S.ContainerTitle>
             <S.ConatinerGenres>
@@ -227,33 +220,15 @@ export const ModalizeMovie = ({ modalizeRef }: any) => {
               </S.Box>
             </S.ConatinerLine>
             <S.ShowMoreActors
-              onPress={() => setShowActors((showActors) => !showActors)}
+              onPress={() =>
+                navigation.navigate("Actors", {
+                  movieId: movieIdState?.newId,
+                  movie: dataMovie?.title,
+                })
+              }
             >
               <S.TextMoreActor>Ver atores</S.TextMoreActor>
             </S.ShowMoreActors>
-            {showActors && (
-              <FlatList
-                numColumns={2}
-                keyExtractor={idGenerator}
-                contentContainerStyle={{ alignItems: "center" }}
-                data={dataActors}
-                renderItem={(item) => <CardActor actor={item} />}
-                ListEmptyComponent={() => (
-                  <>
-                    {(dataActors?.cast?.length === 0 || !dataActors) &&
-                      loading && (
-                        <ActivityIndicator
-                          size="large"
-                          color={colors.greyLight}
-                        />
-                      )}
-                    {(dataActors.length === 0 || !dataActors) && !loading && (
-                      <S.Subtitle>Nenhum ator encontrado.</S.Subtitle>
-                    )}
-                  </>
-                )}
-              />
-            )}
           </>
         )}
       </S.ContainerContent>

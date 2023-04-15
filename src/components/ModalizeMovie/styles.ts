@@ -3,11 +3,6 @@ import colors from "../../utils/colors";
 import fonts from "../../utils/fonts";
 import { StyleSheet } from "react-native";
 
-export const ContainerScreen = styled.ScrollView`
-  height: 100%;
-  background-color: ${colors.dark};
-`;
-
 export const ContainerContent = styled.View`
   align-items: center;
   min-height: 100%;
@@ -21,7 +16,7 @@ export const ContainerTitle = styled.View`
   width: 100%;
   flex-direction: row;
   align-items: center;
-  margin-top: 25px;
+  margin-top: 15px;
   justify-content: space-between;
 `;
 
@@ -31,7 +26,7 @@ export const ContainerRating = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: 21px;
+  font-size: 18px;
   font-family: ${fonts.extraBold};
   color: ${colors.white};
   height: 100%;
@@ -39,23 +34,23 @@ export const Title = styled.Text`
 `;
 
 export const TextRating = styled.Text`
-  font-size: 21px;
+  font-size: 18px;
   font-family: ${fonts.extraBold};
   color: ${colors.white};
   margin-right: 5px;
 `;
 
 export const TextOverview = styled.Text`
-  font-size: 16px;
+  font-size: 14px;
   font-family: ${fonts.regular};
   color: ${colors.white};
   width: 100%;
   text-align: justify;
-  margin-top: 25px;
+  margin-top: 20px;
 `;
 
 export const Text = styled.Text`
-  font-size: 16px;
+  font-size: 14px;
   font-family: ${fonts.regular};
   color: ${colors.white};
 `;
@@ -75,7 +70,7 @@ export const Genres = styled.Text`
 
 export const ConatinerGenres = styled.View`
   flex-direction: row;
-  margin-top: 25px;
+  margin-top: 15px;
   width: 100%;
 `;
 
@@ -87,7 +82,7 @@ export const ConatinerLine = styled.View`
 `;
 
 export const Subtitle = styled.Text`
-  font-size: 16px;
+  font-size: 14px;
   color: ${colors.white};
   font-family: ${fonts.bold};
 `;
@@ -105,7 +100,7 @@ export const IconShare = styled.TouchableOpacity`
 `;
 
 export const ShowMoreActors = styled.TouchableOpacity`
-  margin-top: 30px;
+  margin-top: 15px;
   margin-bottom: 30px;
   padding: 4px 20px;
   border-radius: 50px;
@@ -122,8 +117,8 @@ export const ContainerIcon = styled.View`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 300;
-  width: 200;
+  height: 200;
+  width: 150;
   background-color: ${colors.darkSecondary};
 `;
 
