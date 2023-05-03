@@ -51,41 +51,35 @@ Para finalizar, defini fontes e cores globais que auxiliam e proporcionam um des
 
 ### Para executar o projeto:
 
+Clonar o repositório:
 ```bash
-# Clonar o repositório:
 $ git clone https://github.com/cesarvargasjr/app_movies_react_native.git
 ```
 
-```bash
 # Acessar a pasta do projeto via terminal:
+```bash
 $ cd app_movies_react_native
 ```
 
+Criar o arquivo .env copiando as informações do arquivo .env.example.
+ATENÇÃO! Para acessar a API é preciso de uma chave, neste .env é preciso inserir a sua chave na variável API_KEY, caso não tenha, poderá usar a chave a seguir:
 ```bash
-# Criar o arquivo .env copiando as informações do arquivo .env.example.
-# ATENÇÃO! Para acessar a API é preciso de uma chave, neste .env é preciso inserir a sua chave na variável API_KEY, caso não tenha, poderá usar a chave a seguir:
 $ 3061a37d71a9e614fa59362eeed265b1
 ```
 
+Instale as dependências:
 ```bash
-# Instale as dependências:
 $ npm i
 ```
 
+Execute a aplicação:
 ```bash
-# Execute a aplicação:
 $ expo start
-# ou
-$ npx expo start
 ```
 
-```bash
-# Instale o EXPO em seu emulador.
-```
+- Instale o EXPO em seu emulador.
 
-```bash
-# Após realizar os itens acima, em seu terminal digite "A" para executar a aplicação em um emulador Android ou "I" para emulador IOS.
-```
+- Após realizar os itens acima, em seu terminal digite "A" para executar a aplicação em um emulador Android ou "I" para emulador IOS.
 
 ##
 
