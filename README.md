@@ -51,12 +51,12 @@ Para finalizar, defini fontes e cores globais que auxiliam e proporcionam um des
 
 ### Para executar o projeto:
 
-Clonar o repositório:
+Clonar o repositório
 ```bash
 $ git clone https://github.com/cesarvargasjr/app_movies_react_native.git
 ```
 
-# Acessar a pasta do projeto via terminal:
+Acessar a pasta do projeto via terminal
 ```bash
 $ cd app_movies_react_native
 ```
@@ -67,12 +67,12 @@ ATENÇÃO! Para acessar a API é preciso de uma chave, neste .env é preciso ins
 $ 3061a37d71a9e614fa59362eeed265b1
 ```
 
-Instale as dependências:
+Instale as dependências
 ```bash
 $ npm i
 ```
 
-Execute a aplicação:
+Execute a aplicação
 ```bash
 $ expo start
 ```
